@@ -56,7 +56,8 @@ namespace Business.Concrete
                 FirstName = userForRegisterDto.FirstName,
                 LastName = userForRegisterDto.LastName,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+                Status = true
             };
             await _userService.Add(user);
             await _userOperationClaimService.Add(new UserOperationClaim { OperationClaimId = 2, UserId = user.Id });

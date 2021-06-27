@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Interceptors
 {
-    public class MethodInterception : MethodInterceptionBaseAttribute
+    public abstract class MethodInterception : MethodInterceptionBaseAttribute
     {
-        public virtual void OnBefore(IInvocation invocation) { }
-        public virtual void OnAfter(IInvocation invocation) { }
-        public virtual void OnException(IInvocation invocation, Exception exception) { }
-        public virtual void OnSuccess(IInvocation invocation) { }
+        protected virtual void OnBefore(IInvocation invocation) { }
+        protected virtual void OnAfter(IInvocation invocation) { }
+        protected virtual void OnException(IInvocation invocation, Exception exception) { }
+        protected virtual void OnSuccess(IInvocation invocation) { }
         public override void Intercept(IInvocation invocation)
         {
             var isSuccess = true;
