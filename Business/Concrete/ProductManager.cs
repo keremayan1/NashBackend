@@ -3,7 +3,9 @@ using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -20,7 +22,9 @@ namespace Business.Concrete
         {
             _productDal = productDal;
         }
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(ProductValidator))]
+        
         public async Task<IResult> Add(Product product)
         {
             var result = BusinessRules.Run(ProductsToUpper(product));
@@ -39,7 +43,9 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductUpdated);
         }
         [CacheAspect]
-        //  [SecuredOperation("moderator,admin")]
+      [SecuredOperation("user,moderator,admin")]
+    
+      
         public async Task<IDataResult<List<Product>>> GetAll()
         {
             return new SuccessDataResult<List<Product>>(await _productDal.GetAllAsync(), Messages.ProductFiltered);
@@ -61,6 +67,7 @@ namespace Business.Concrete
             product.ProductName = product.ProductName.ToUpper();
             return new SuccessResult();
         }
+     
          
     }
 }

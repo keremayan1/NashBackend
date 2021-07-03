@@ -8,7 +8,7 @@ namespace Core.CrossCuttingConcerns.Logging.Log4Net.Loggers
 {
     public class FileLogger : LoggerServiceBase
     {
-        public FileLogger() : base("JsonFileAppender")
+        public FileLogger() : base("JsonFileLogger")
         {
         }
     }

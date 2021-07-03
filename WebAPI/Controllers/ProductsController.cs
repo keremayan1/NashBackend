@@ -39,16 +39,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpGet("getall2")]
-        public IActionResult GetAll2()
-        {
-            var result =  _productService.GetAll2();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+    
 
     }
 }

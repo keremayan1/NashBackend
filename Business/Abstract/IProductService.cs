@@ -12,7 +12,9 @@ namespace Business.Abstract
    public interface IProductService:IGenericBaseService<Product>
     {
         Task<IDataResult<Product>> GetByProductId(int id);
-       
+
+
+
 
     }
 }

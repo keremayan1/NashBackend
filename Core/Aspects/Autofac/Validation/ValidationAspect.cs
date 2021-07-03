@@ -18,7 +18,7 @@ namespace Core.Aspects.Autofac.Validation
         {
             if (!typeof(IValidator).IsAssignableFrom(validator))
             {
-                throw new Exception("Hatali Dogrulama Servisi");
+                throw new System.Exception("Hatali Dogrulama Servisi");
             }
             _validator = validator;
         }
