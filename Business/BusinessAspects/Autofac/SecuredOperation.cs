@@ -7,6 +7,7 @@ using Core.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using Business.Constants;
+using System.Security.Authentication;
 
 namespace Business.BusinessAspects.Autofac
 {
@@ -32,7 +33,7 @@ namespace Business.BusinessAspects.Autofac
                     return;
                 }
             }
-            throw new Exception(Messages.AuthorizationDenied);
+            throw new AuthenticationException(Messages.AuthorizationDenied);
         }
     }
 }

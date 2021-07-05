@@ -10,7 +10,9 @@ using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Concrete.Dto;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -24,7 +26,7 @@ namespace Business.Concrete
         }
         [SecuredOperation("admin")]
         [ValidationAspect(typeof(ProductValidator))]
-        
+
         public async Task<IResult> Add(Product product)
         {
             var result = BusinessRules.Run(ProductsToUpper(product));
@@ -43,9 +45,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductUpdated);
         }
         [CacheAspect]
-      [SecuredOperation("user,moderator,admin")]
-    
-      
+        [SecuredOperation("user,moderator,admin")]
         public async Task<IDataResult<List<Product>>> GetAll()
         {
             return new SuccessDataResult<List<Product>>(await _productDal.GetAllAsync(), Messages.ProductFiltered);
@@ -61,13 +61,37 @@ namespace Business.Concrete
             await _productDal.UpdateAsync(product);
             return new SuccessResult(Messages.ProductUpdated);
         }
+        public IDataResult<List<ProductDetailDto>> GetProductDetailsNameDesc()
+        {
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().OrderByDescending(c => c.ProductName).ToList());
+        }
+
+        public IDataResult<List<ProductDetailDto>> GetProductDetailsNameAsc()
+        {
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().OrderBy(p => p.ProductName).ToList());
+        }
+        public  IDataResult<List<ProductDetailDto>> GetProductDetailsPriceAsc()
+        {
+            return new SuccessDataResult<List<ProductDetailDto>>( _productDal.GetProductDetails().OrderBy(p => p.UnitPrice).ToList());
+        }
+
+        public IDataResult<List<ProductDetailDto>> GetProductDetailsPriceDesc()
+        {
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().OrderByDescending(p => p.UnitPrice).ToList());
+        }
+        public IDataResult<List<ProductDetailDto>> GetProductDetails()
+        {
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails());
+        }
+        public IDataResult<List<ProductDetailDto>> GetProductDetailsByMinAndMaxPrice(decimal minPrice, decimal maxPrice)
+        {
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails(p => p.UnitPrice >= minPrice && p.UnitPrice <= maxPrice));
+        }
         //Business Rules
         public IResult ProductsToUpper(Product product)
         {
             product.ProductName = product.ProductName.ToUpper();
             return new SuccessResult();
         }
-     
-         
     }
 }
