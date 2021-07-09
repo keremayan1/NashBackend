@@ -13,7 +13,10 @@ namespace Entities.Concrete
         public int ProductId { get; set; }
         public string ImagePath { get; set; }
         public DateTime Date { get; set; }
-
+        public ProductImage()
+        {
+            Date = DateTime.Now;
+        }
 
     }
 }

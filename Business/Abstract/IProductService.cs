@@ -19,6 +19,8 @@ namespace Business.Abstract
         IDataResult<List<ProductDetailDto>> GetProductDetailsPriceDesc();
         IDataResult<List<ProductDetailDto>> GetProductDetails();
         IDataResult<List<ProductDetailDto>> GetProductDetailsByMinAndMaxPrice(decimal minPrice, decimal maxPrice);
+        IDataResult<List<ProductDetailDto>> GetProductDetailsByCategoryNameDesc();
+        IDataResult<List<ProductDetailDto>> GetProductDetailsByCategoryNameAsc();
 
 
 

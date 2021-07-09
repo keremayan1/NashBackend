@@ -20,16 +20,18 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
-        public ProductManager(IProductDal productDal)
+        private ICategoryService _categoryService;
+        public ProductManager(IProductDal productDal, ICategoryService categoryService)
         {
             _productDal = productDal;
+            _categoryService = categoryService;
         }
         [SecuredOperation("admin")]
         [ValidationAspect(typeof(ProductValidator))]
 
         public async Task<IResult> Add(Product product)
         {
-            var result = BusinessRules.Run(ProductsToUpper(product));
+            var result = BusinessRules.Run(ProductsToUpper(product),CheckIfCategoryLimitExists(),CheckIfProductIdExists(product.ProductId));
             if (result != null)
             {
                 return result;
@@ -87,11 +89,43 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails(p => p.UnitPrice >= minPrice && p.UnitPrice <= maxPrice));
         }
+
+        public IDataResult<List<ProductDetailDto>> GetProductDetailsByCategoryNameDesc()
+        {
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().OrderByDescending(p => p.CategoryName).ToList());
+        }
+
+        public  IDataResult<List<ProductDetailDto>> GetProductDetailsByCategoryNameAsc()
+        {
+            return new SuccessDataResult<List<ProductDetailDto>>( _productDal.GetProductDetails().OrderBy(p => p.CategoryName).ToList());
+        }
+
         //Business Rules
         public IResult ProductsToUpper(Product product)
         {
             product.ProductName = product.ProductName.ToUpper();
             return new SuccessResult();
         }
+       
+        public IResult CheckIfProductIdExists(int productId)
+        {
+            var result = _productDal.GetAll(p => p.ProductId == productId).Any();
+            if (result)
+            {
+                return new ErrorResult("Bu ürün sistemde mevcut");
+            }
+            return new SuccessResult();
+        }
+
+        public IResult CheckIfCategoryLimitExists()
+        {
+            var result = _categoryService.GetAll().Result.Data;
+            if (result.Count>10)
+            {
+                return  new ErrorResult();
+            }
+            return  new SuccessResult();
+        }
+
     }
 }

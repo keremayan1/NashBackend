@@ -92,5 +92,15 @@ namespace Core.DataAccess.EntityFramework
             updatedStateAsync.State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
+
+        public async Task MultipleAdd(TEntity[] entity)
+        {
+            foreach (var entities in entity)
+            {
+                var multiAddedState = context.Entry(entities);
+                multiAddedState.State = EntityState.Added;
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

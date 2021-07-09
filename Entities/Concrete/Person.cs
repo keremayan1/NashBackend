@@ -5,6 +5,7 @@ namespace Entities
 {
     public class Person:IEntity
     {
+        
         public int Id { get; set; }
         public string NationalId { get; set; }
         public string Name { get; set; }
