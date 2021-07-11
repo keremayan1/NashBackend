@@ -21,6 +21,7 @@ namespace Business.Abstract
         IDataResult<List<ProductDetailDto>> GetProductDetailsByMinAndMaxPrice(decimal minPrice, decimal maxPrice);
         IDataResult<List<ProductDetailDto>> GetProductDetailsByCategoryNameDesc();
         IDataResult<List<ProductDetailDto>> GetProductDetailsByCategoryNameAsc();
+        IDataResult<List<ProductDetailDto>> GetProductCount();
 
 
 

@@ -16,10 +16,14 @@ namespace Business.Concrete
     public class ProductImageManager : IProductImageService
     {
         IProductImageDal _productImageDal;
+        IProductService _productService;
 
-        public ProductImageManager(IProductImageDal productImageDal)
+      
+
+        public ProductImageManager(IProductImageDal productImageDal, IProductService productService)
         {
             _productImageDal = productImageDal;
+            _productService = productService;
         }
         string error = "";
         List<ProductImage> products = new List<ProductImage>();
@@ -31,22 +35,21 @@ namespace Business.Concrete
             //    return result;
             //}
             //await _productImageDal.MultipleAdd(products.ToArray());
+
             return new SuccessResult("Ürün resmi başarılı!");
         }
 
         public async Task<IResult> AddAsync(List<IFormFile> file, ProductImage productImage)
         {
-            var result = BusinessRules.Run(CheckIfProductImageEnabled(productImage),ProductImageFileCount(file,productImage));
-            if (result!=null)
+            var result = BusinessRules.Run(CheckIfProductImageEnabled(productImage), ProductImageFileCount(file, productImage));
+            if (result != null)
             {
                 return result;
             }
+          //  await ProductIdAdd(productImage);
             await _productImageDal.MultipleAdd(products.ToArray());
             return new SuccessResult("Ürün resmi başarılı!");
         }
-
-       
-
         public async Task<IResult> Delete(ProductImage entity)
         {
            await _productImageDal.DeleteAsync(entity);
@@ -69,6 +72,10 @@ namespace Business.Concrete
             return new SuccessResult();
         }
         //Business Rules
+        private async Task ProductIdAdd(ProductImage productImage)
+        {
+            await _productService.Add(new Product { ProductId = productImage.ProductId });
+        }
         public IResult CheckIfProductImageEnabled(ProductImage productImage)
         {
             var result = _productImageDal.GetAll(p => p.ProductId == productImage.ProductId).Count;
@@ -84,7 +91,9 @@ namespace Business.Concrete
             {
                 var newImage = new ProductImage
                 {
-                    ProductId = productImage.ProductId
+                    ProductId = productImage.ProductId,
+                    Date= DateTime.Now
+                 
                 };
                 var imageResult = FileHelper.Upload(file[i]);
                 if (!imageResult.Success)
@@ -100,10 +109,6 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-        public IResult ProductImageDateAdd(ProductImage productImage)
-        {
-            productImage.Date = DateTime.Now.Date;
-            return new SuccessResult();
-        }
+    
     }
 }

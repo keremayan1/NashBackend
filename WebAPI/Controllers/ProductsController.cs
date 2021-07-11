@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
         [HttpGet("getproductsdetail")]
         public IActionResult GetProductDetail()
         {
-            var result = _productService.GetProductDetailsPriceDesc();
+            var result = _productService.GetProductCount();
             if (result.Success)
             {
                 return Ok(result);

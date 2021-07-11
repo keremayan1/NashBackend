@@ -15,7 +15,7 @@ using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.MSSQL;
 using Core.Utilities.Security.JWT;
 using DataAccess;
-
+using Business.Adapters.PersonVerificationKps;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -40,6 +40,8 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>().SingleInstance();
             builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>().SingleInstance();
+
+            builder.RegisterType<KpsServiceManager>().As<IKpsService>().SingleInstance();
         
 
             var assembly = Assembly.GetExecutingAssembly();

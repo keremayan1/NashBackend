@@ -99,6 +99,12 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<ProductDetailDto>>( _productDal.GetProductDetails().OrderBy(p => p.CategoryName).ToList());
         }
+        public IDataResult<List<ProductDetailDto>> GetProductCount()
+        {
+            var result = _productDal.GetProductDetails().Count.ToString();
+
+            return new SuccessDataResult<List<ProductDetailDto>>(result);
+        }
 
         //Business Rules
         public IResult ProductsToUpper(Product product)
@@ -127,5 +133,6 @@ namespace Business.Concrete
             return  new SuccessResult();
         }
 
+     
     }
 }
