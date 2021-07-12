@@ -19,24 +19,24 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
-        public async Task<IResult> Add(Category entity)
+        public async Task<IResult> AddAsync(Category entity)
         {
             await _categoryDal.AddAsync(entity);
             return new SuccessResult();
         }
 
-        public async Task<IResult> Delete(Category entity)
+        public async Task<IResult> DeleteAsync(Category entity)
         {
             await _categoryDal.DeleteAsync(entity);
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<List<Category>>> GetAll()
+        public async Task<IDataResult<List<Category>>> GetAllAsync()
         {
             return new SuccessDataResult<List<Category>>(await _categoryDal.GetAllAsync());
-        }
+        } 
 
-        public async Task<IResult> Update(Category entity)
+        public async Task<IResult> UpdateAsync(Category entity)
         {
             await _categoryDal.UpdateAsync(entity);
             return new SuccessResult();

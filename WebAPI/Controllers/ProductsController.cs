@@ -20,9 +20,9 @@ namespace WebAPI.Controllers
             _productService = productService;
         }
         [HttpPost("add")]
-        public async Task<IActionResult> Add(Product product)
+        public async Task<IActionResult> AddAsync(Product product)
         {
-            var result = await _productService.Add(product);
+            var result = await _productService.AddAsync(product);
             if (result.Success)
             {
                 return Ok(result);
@@ -30,9 +30,9 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
         [HttpGet("getall")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var result = await _productService.GetAll();
+            var result = await _productService.GetAllAsync();
             if (result.Success)
             {
                 return Ok(result);
@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
         [HttpGet("getproductsdetail")]
         public IActionResult GetProductDetail()
         {
-            var result = _productService.GetProductCount();
+            var result = _productService.GetProductDetails();
             if (result.Success)
             {
                 return Ok(result);

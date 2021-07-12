@@ -1,4 +1,5 @@
-﻿using Business.Generics;
+﻿
+using Core.Utilities.Results;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,11 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-   public interface ICategoryService:IGenericBaseService<Category>
+   public interface ICategoryService
     {
+        Task<IDataResult<List<Category>>> GetAllAsync();
+        Task<IResult> AddAsync(Category entity);
+        Task<IResult> UpdateAsync(Category entity);
+        Task<IResult> DeleteAsync(Category entity);
     }
 }

@@ -27,17 +27,7 @@ namespace Business.Concrete
         }
         string error = "";
         List<ProductImage> products = new List<ProductImage>();
-        public async Task<IResult> Add(ProductImage productImage)
-        {
-            //var result = BusinessRules.Run(CheckIfProductImageEnabled(productImage), ProductImageFileCount(file, productImage));
-            //if (result != null)
-            //{
-            //    return result;
-            //}
-            //await _productImageDal.MultipleAdd(products.ToArray());
-
-            return new SuccessResult("Ürün resmi başarılı!");
-        }
+       
 
         public async Task<IResult> AddAsync(List<IFormFile> file, ProductImage productImage)
         {
@@ -50,32 +40,33 @@ namespace Business.Concrete
             await _productImageDal.MultipleAdd(products.ToArray());
             return new SuccessResult("Ürün resmi başarılı!");
         }
-        public async Task<IResult> Delete(ProductImage entity)
+        public async Task<IResult> DeleteAsync(ProductImage entity)
         {
            await _productImageDal.DeleteAsync(entity);
             return new SuccessResult();
         }
 
-        public async Task<IDataResult<List<ProductImage>>> GetAll()
+        public async Task<IDataResult<List<ProductImage>>> GetAllAsync()
         {
             return new SuccessDataResult<List<ProductImage>>(await _productImageDal.GetAllAsync());
         }
 
-        public async Task<IDataResult<List<ProductImage>>> GetById(int id)
+        public async Task<IDataResult<List<ProductImage>>> GetByIdAsync(int id)
         {
             return new SuccessDataResult<List<ProductImage>>(await _productImageDal.GetAllAsync(p => p.Id == id));
         }
 
-        public async Task<IResult> Update(ProductImage entity)
+        public async Task<IResult> UpdateAsync(ProductImage entity)
         {
             await _productImageDal.UpdateAsync(entity);
             return new SuccessResult();
         }
-        //Business Rules
-        private async Task ProductIdAdd(ProductImage productImage)
+        private async Task ProductIdAddAsync(ProductImage productImage)
         {
-            await _productService.Add(new Product { ProductId = productImage.ProductId });
+            await _productService.AddAsync(new Product { ProductId = productImage.ProductId });
         }
+        //Business Rules
+
         public IResult CheckIfProductImageEnabled(ProductImage productImage)
         {
             var result = _productImageDal.GetAll(p => p.ProductId == productImage.ProductId).Count;

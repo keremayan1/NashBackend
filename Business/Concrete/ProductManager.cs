@@ -29,7 +29,7 @@ namespace Business.Concrete
         [SecuredOperation("admin")]
         [ValidationAspect(typeof(ProductValidator))]
 
-        public async Task<IResult> Add(Product product)
+        public async Task<IResult> AddAsync(Product product)
         {
             var result = BusinessRules.Run(ProductsToUpper(product),CheckIfCategoryLimitExists(),CheckIfProductIdExists(product.ProductId));
             if (result != null)
@@ -41,24 +41,24 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductAdded);
         }
 
-        public async Task<IResult> Delete(Product product)
+        public async Task<IResult> DeleteAsync(Product product)
         {
             await _productDal.DeleteAsync(product);
             return new SuccessResult(Messages.ProductUpdated);
         }
         [CacheAspect]
         [SecuredOperation("user,moderator,admin")]
-        public async Task<IDataResult<List<Product>>> GetAll()
+        public async Task<IDataResult<List<Product>>> GetAllAsync()
         {
             return new SuccessDataResult<List<Product>>(await _productDal.GetAllAsync(), Messages.ProductFiltered);
         }
 
-        public async Task<IDataResult<Product>> GetByProductId(int productId)
+        public async Task<IDataResult<Product>> GetByProductIdAsync(int productId)
         {
             return new SuccessDataResult<Product>(await _productDal.GetAsync(p => p.ProductId == productId));
         }
 
-        public async Task<IResult> Update(Product product)
+        public async Task<IResult> UpdateAsync(Product product)
         {
             await _productDal.UpdateAsync(product);
             return new SuccessResult(Messages.ProductUpdated);
@@ -125,7 +125,7 @@ namespace Business.Concrete
 
         public IResult CheckIfCategoryLimitExists()
         {
-            var result = _categoryService.GetAll().Result.Data;
+            var result = _categoryService.GetAllAsync().Result.Data;
             if (result.Count>10)
             {
                 return  new ErrorResult();

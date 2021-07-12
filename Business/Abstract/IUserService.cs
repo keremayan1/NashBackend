@@ -1,5 +1,6 @@
-﻿using Business.Generics;
+﻿
 using Core.Entities.Concrete;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,12 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IUserService:IGenericBaseService<User>
+    public interface IUserService
     {
+        Task<IDataResult<List<User>>> GetAll();
+        Task<IResult> Add(User entity);
+        Task<IResult> Update(User entity);
+        Task<IResult> Delete(User entity);
         List<OperationClaim> GetClaims(User user);
         User GetByMail(string email);
 

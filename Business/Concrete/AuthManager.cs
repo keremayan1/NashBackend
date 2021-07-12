@@ -60,13 +60,13 @@ namespace Business.Concrete
                 Status = true
             };
             await _userService.Add(user);
-            await UserOperationClaimsAdd(user);
+            await UserOperationClaimsAddAsync(user);
             return new SuccessDataResult<User>(user, "Kayit Islemi Basarili");
         }
 
-        private async Task UserOperationClaimsAdd(User user)
+        private async Task UserOperationClaimsAddAsync(User user)
         {
-            await _userOperationClaimService.Add(new UserOperationClaim { OperationClaimId = 2, UserId = user.Id });
+            await _userOperationClaimService.AddAsync(new UserOperationClaim { OperationClaimId = 2, UserId = user.Id });
         }
 
         public IResult UserExits(string email)

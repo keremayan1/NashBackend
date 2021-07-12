@@ -1,4 +1,4 @@
-﻿using Business.Generics;
+﻿
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.Concrete.Dto;
@@ -10,9 +10,14 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-   public interface IProductService:IGenericBaseService<Product>
+   public interface IProductService
     {
-        Task<IDataResult<Product>> GetByProductId(int id);
+        Task<IDataResult<List<Product>>> GetAllAsync();
+        Task<IResult> AddAsync(Product entity);
+        Task<IResult> UpdateAsync(Product entity);
+        Task<IResult> DeleteAsync(Product entity);
+
+        Task<IDataResult<Product>> GetByProductIdAsync(int id);
         IDataResult<List<ProductDetailDto>>GetProductDetailsNameDesc();
         IDataResult<List<ProductDetailDto>> GetProductDetailsNameAsc();
         IDataResult<List<ProductDetailDto>> GetProductDetailsPriceAsc();

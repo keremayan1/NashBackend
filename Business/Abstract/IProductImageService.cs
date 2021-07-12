@@ -1,4 +1,4 @@
-﻿using Business.Generics;
+﻿
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
@@ -10,10 +10,14 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IProductImageService : IGenericBaseService<ProductImage>
+    public interface IProductImageService 
     {
+        Task<IDataResult<List<ProductImage>>> GetAllAsync();
+     
+        Task<IResult> UpdateAsync(ProductImage entity);
+        Task<IResult> DeleteAsync(ProductImage entity);
         Task<IResult> AddAsync(List<IFormFile> file, ProductImage productImage);
-        Task<IDataResult<List<ProductImage>>> GetById(int id);
+        Task<IDataResult<List<ProductImage>>> GetByIdAsync(int id);
 
 
     }

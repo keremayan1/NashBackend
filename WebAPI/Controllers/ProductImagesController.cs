@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
             _productImageService = productImageService;
         }
         [HttpPost("add")]
-        public IActionResult Add([FromForm(Name = ("Image"))] List<IFormFile> file, [FromForm] ProductImage images)
+        public IActionResult AddAsync([FromForm(Name = ("Image"))] List<IFormFile> file, [FromForm] ProductImage images)
         {
             var result =  _productImageService.AddAsync(file, images).Result;
             if (result.Success)
