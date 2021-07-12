@@ -94,7 +94,7 @@ namespace Business.Concrete
         }
         private IResult CheckIfNationalIdExists(string nationalId)
         {
-            var result = _customerDal.GetCustomers(p=>p.NationalId==nationalId).Any();
+            var result = _customerDal.GetCustomers(p=>p.NationalId==nationalId).Result.Any();
             if (result)
             {
                 return new ErrorResult("Sistemde Bu Kullanıcı Mevcuttur");
