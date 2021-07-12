@@ -3,6 +3,7 @@ using DataAccess.Abstract;
 using Entities;
 using Entities.Concrete;
 using Entities.Concrete.Dto;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
 {
     public class EfCustomerDal : EfEntityRepository<Customer, SqlContext>, ICustomerDal
     {
-        public List<CustomerDetailDto> GetCustomers(Expression<Func<CustomerDetailDto, bool>> filter = null)
+        public async Task<List<CustomerDetailDto>> GetCustomers(Expression<Func<CustomerDetailDto, bool>> filter = null)
         {
             using (var context = new SqlContext())
             {
@@ -33,11 +34,13 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
                                  Phone = customers.Phone
                              };
                 return filter == null ?
-                    result.ToList() :
-                    result.Where(filter).ToList();
+                   await result.ToListAsync() :
+                    await result.Where(filter).ToListAsync();
 
 
             }
         }
+
+      
     }
 }

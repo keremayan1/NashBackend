@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
 {
     public class EfProductDal : EfEntityRepository<Product, SqlContext>, IProductDal
     {
-        public  List<ProductDetailDto> GetProductDetails(Expression<Func<ProductDetailDto, bool>> filter = null)
+        public async Task<List<ProductDetailDto>> GetProductDetails(Expression<Func<ProductDetailDto, bool>> filter = null)
         {
             using (var context = new SqlContext())
             {
@@ -29,8 +29,8 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
                                  UnitPrice = product.UnitPrice
                              };
                 return filter == null ?
-                     result.ToList() : 
-                     result.Where(filter).ToList();
+                    await result.ToListAsync() :
+                     await result.Where(filter).ToListAsync();
             }
         }
     }

@@ -63,9 +63,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(await _customerDal.GetAllAsync(p => p.CustomerId == customerId));
         }
 
-        public IDataResult<List<CustomerDetailDto>> GetCustomers(Customer customer)
+        public   IDataResult<List<CustomerDetailDto>> GetCustomers(Customer customer)
         {
-            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomers());
+            return new SuccessDataResult<List<CustomerDetailDto>>( _customerDal.GetCustomers().Result.ToList());
         }
 
         public async Task<IResult> UpdateAsync(CustomerDetailDto customerDetailDto)

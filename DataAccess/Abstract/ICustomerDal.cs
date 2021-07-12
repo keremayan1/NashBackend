@@ -11,9 +11,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
- public   interface ICustomerDal:IEntityRepository<Customer>,IAsyncEntityRepository<Customer>
+    public interface ICustomerDal : IEntityRepository<Customer>, IAsyncEntityRepository<Customer>
     {
-        List<CustomerDetailDto> GetCustomers(Expression<Func<CustomerDetailDto, bool>> filter = null);
-
+        Task<List<CustomerDetailDto>> GetCustomers(Expression<Func<CustomerDetailDto, bool>> filter = null);
     }
 }

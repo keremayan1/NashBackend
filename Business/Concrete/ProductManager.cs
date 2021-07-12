@@ -65,43 +65,44 @@ namespace Business.Concrete
         }
         public IDataResult<List<ProductDetailDto>> GetProductDetailsNameDesc()
         {
-            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().OrderByDescending(c => c.ProductName).ToList());
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().Result.OrderByDescending(c => c.ProductName).ToList());
         }
 
         public IDataResult<List<ProductDetailDto>> GetProductDetailsNameAsc()
         {
-            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().OrderBy(p => p.ProductName).ToList());
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().Result.OrderBy(p => p.ProductName).ToList());
         }
         public  IDataResult<List<ProductDetailDto>> GetProductDetailsPriceAsc()
         {
-            return new SuccessDataResult<List<ProductDetailDto>>( _productDal.GetProductDetails().OrderBy(p => p.UnitPrice).ToList());
+            return new SuccessDataResult<List<ProductDetailDto>>( _productDal.GetProductDetails().Result.OrderBy(p => p.UnitPrice).ToList());
         }
 
         public IDataResult<List<ProductDetailDto>> GetProductDetailsPriceDesc()
         {
-            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().OrderByDescending(p => p.UnitPrice).ToList());
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().Result.OrderByDescending(p => p.UnitPrice).ToList());
         }
         public IDataResult<List<ProductDetailDto>> GetProductDetails()
         {
-            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails());
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().Result);
         }
         public IDataResult<List<ProductDetailDto>> GetProductDetailsByMinAndMaxPrice(decimal minPrice, decimal maxPrice)
         {
-            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails(p => p.UnitPrice >= minPrice && p.UnitPrice <= maxPrice));
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails(p => p.UnitPrice >= minPrice && p.UnitPrice <= maxPrice).Result);
         }
 
         public IDataResult<List<ProductDetailDto>> GetProductDetailsByCategoryNameDesc()
         {
-            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().OrderByDescending(p => p.CategoryName).ToList());
+           
+            return new SuccessDataResult<List<ProductDetailDto>>( _productDal.GetProductDetails().Result.OrderByDescending(p => p.CategoryName).ToList());
         }
 
         public  IDataResult<List<ProductDetailDto>> GetProductDetailsByCategoryNameAsc()
         {
-            return new SuccessDataResult<List<ProductDetailDto>>( _productDal.GetProductDetails().OrderBy(p => p.CategoryName).ToList());
+            return new SuccessDataResult<List<ProductDetailDto>>( _productDal.GetProductDetails().Result.OrderBy(p => p.CategoryName).ToList());
         }
         public IDataResult<List<ProductDetailDto>> GetProductCount()
         {
-            var result = _productDal.GetProductDetails().Count.ToString();
+            var result = _productDal.GetProductDetails().Result.Count.ToString();
 
             return new SuccessDataResult<List<ProductDetailDto>>(result);
         }
