@@ -72,7 +72,6 @@ namespace Business.Concrete
         [CacheRemoveAspect("Get")]
         public async Task<IResult> UpdateAsync(CustomerDetailDto customerDetailDto)
         {
-
             var person = Person(customerDetailDto);
             var customer = Customer(customerDetailDto);
             var result = BusinessRules.Run(CheckIfRealPerson(person), CustomerDetailsToUpper(customer),CheckIfNationalIdExists(customerDetailDto.NationalId));
