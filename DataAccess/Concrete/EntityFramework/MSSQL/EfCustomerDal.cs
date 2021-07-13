@@ -23,6 +23,7 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
                          on person.Id equals personCustomer.PersonId
                          join customers in context.Customers
                          on personCustomer.CustomerId equals customers.CustomerId
+                         where person.Id==personCustomer.PersonId &&  personCustomer.CustomerId==customers.CustomerId
                          select new CustomerDetailDto
                          {
                              NationalId = person.NationalId,
