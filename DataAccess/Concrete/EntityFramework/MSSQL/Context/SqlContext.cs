@@ -20,6 +20,10 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
         public DbSet<Person> Persons { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<PersonCustomer> PersonCustomers { get; set; }
+        public DbSet<Shop> Shops { get; set; }
+        public DbSet<PersonShop> PersonShops { get; set; }
+
+
 
 
 

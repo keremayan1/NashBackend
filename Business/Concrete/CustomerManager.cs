@@ -104,7 +104,6 @@ namespace Business.Concrete
         private IResult CustomerDetailsToUpper(Customer customer)
         {
             customer.Country = customer.Country.ToUpper();
-            
             return new SuccessResult();
         }
         

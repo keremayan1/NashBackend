@@ -50,6 +50,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfPersonCustomerDal>().As<IPersonCustomerDal>().SingleInstance();
             builder.RegisterType<PersonCustomerManager>().As<IPersonCustomerService>().SingleInstance();
 
+            builder.RegisterType<EfShopDal>().As<IShopDal>().SingleInstance();
+            builder.RegisterType<ShopManager>().As<IShopService>().SingleInstance();
+
             builder.RegisterType<KpsServiceManager>().As<IKpsService>().SingleInstance();
         
 
