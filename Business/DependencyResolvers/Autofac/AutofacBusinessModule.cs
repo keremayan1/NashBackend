@@ -53,8 +53,11 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfShopDal>().As<IShopDal>().SingleInstance();
             builder.RegisterType<ShopManager>().As<IShopService>().SingleInstance();
 
+            builder.RegisterType<EfPersonShopDal>().As<IPersonShopDal>().SingleInstance();
+            builder.RegisterType<PersonShopManager>().As<IPersonShopService>().SingleInstance();
+
             builder.RegisterType<KpsServiceManager>().As<IKpsService>().SingleInstance();
-        
+
 
             var assembly = Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces().EnableInterfaceInterceptors(new ProxyGenerationOptions

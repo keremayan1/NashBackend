@@ -8,9 +8,10 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
     public class SqlContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server = (localdb)\mssqllocaldb; Database = Deneme; Trusted_Connection = true");
+        {//"Server = (localdb)\mssqllocaldb; Database = Deneme; Trusted_Connection = true"
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\ProjectsV13;Initial Catalog=Deneme;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
+        //Data Source=(localdb)\ProjectsV13;Initial Catalog=Deneme;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
         public DbSet<Product> Products { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }

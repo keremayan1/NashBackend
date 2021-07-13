@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Adapters.PersonVerificationKps;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -28,7 +29,7 @@ namespace Business.Concrete
             _personCustomerService = personCustomerService;
             _kpsService = kpsService;
         }
-
+        [CacheRemoveAspect("Get")]
         public async Task<IResult> AddAsync(CustomerDetailDto customerDetailDto)
         {
             var person = Person(customerDetailDto);
@@ -43,6 +44,7 @@ namespace Business.Concrete
             await _personCustomerService.AddAsync(new PersonCustomer { PersonId = person.Id, CustomerId = customer.CustomerId });
             return new SuccessResult("ekleme islemi basarili");
         }
+        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(CustomerDetailDto customerDetailDto)
         {
             var person = Person(customerDetailDto);
@@ -52,22 +54,22 @@ namespace Business.Concrete
             await _personCustomerService.DeleteAsync(new PersonCustomer { PersonId = person.Id, CustomerId = customer.CustomerId });
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public async Task<IDataResult<List<Customer>>> GetAllAsync()
         {
             return new SuccessDataResult<List<Customer>>(await _customerDal.GetAllAsync());
         }
-
+        [CacheAspect]
         public async Task<IDataResult<List<Customer>>> GetByIdAsync(int customerId)
         {
             return new SuccessDataResult<List<Customer>>(await _customerDal.GetAllAsync(p => p.CustomerId == customerId));
         }
-
+        [CacheAspect]
         public   IDataResult<List<CustomerDetailDto>> GetCustomers(Customer customer)
         {
             return new SuccessDataResult<List<CustomerDetailDto>>( _customerDal.GetCustomers().Result.ToList());
         }
-
+        [CacheRemoveAspect("Get")]
         public async Task<IResult> UpdateAsync(CustomerDetailDto customerDetailDto)
         {
 

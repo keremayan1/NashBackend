@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Adapters.PersonVerificationKps;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities;
@@ -17,18 +19,25 @@ namespace Business.Concrete
         IShopDal _shopDal;
         IPersonService _personService;
         IPersonShopService _personShopService;
+        IKpsService _kpsService;
 
-        public ShopManager(IShopDal shopDal, IPersonService personService, IPersonShopService personShopService)
+        public ShopManager(IShopDal shopDal, IPersonService personService, IPersonShopService personShopService, IKpsService kpsService)
         {
             _shopDal = shopDal;
             _personService = personService;
             _personShopService = personShopService;
+            _kpsService = kpsService;
         }
 
         public async Task<IResult> AddAsync(ShopDetailDto shopDetailDto)
         {
             var person = Person(shopDetailDto);
             var shop = Shop(shopDetailDto);
+            var result = BusinessRules.Run(CheckIfRealPerson(person), CheckIfPersonExists(person.NationalId));
+            if (result != null)
+            {
+                return result;
+            }
             await _personService.AddAsync(person);
             await _shopDal.AddAsync(shop);
             await _personShopService.AddAsync(new PersonShop { PersonId = person.Id, ShopId = shop.Id });
@@ -63,6 +72,11 @@ namespace Business.Concrete
         {
             var person = Person(shopDetailDto);
             var shop = Shop(shopDetailDto);
+            var result = BusinessRules.Run(CheckIfRealPerson(person), CheckIfPersonExists(person.NationalId));
+            if (result != null)
+            {
+                return result;
+            }
             await _personService.UpdateAsync(person);
             await _shopDal.UpdateAsync(shop);
             await _personShopService.UpdateAsync(new PersonShop { PersonId = person.Id, ShopId = shop.Id });
@@ -84,6 +98,25 @@ namespace Business.Concrete
             {
                 TaxNumber = shopDetailDto.TaxNumber
             };
+        }
+        //Business Rules 
+        public IResult CheckIfRealPerson(Person person)
+        {
+            var result = _kpsService.Verify(person).Result;
+            if (result != true)
+            {
+                return new ErrorResult("Hatali TC-No");
+            }
+            return new SuccessResult();
+        }
+        public IResult CheckIfPersonExists(string nationalId)
+        {
+            var result = _shopDal.GetShopDetails(ps => ps.NationalId == nationalId).Result.Any();
+            if (result)
+            {
+                return new ErrorResult("Sistemde Boyle Bir Kullanici Vardir");
+            }
+            return new SuccessResult();
         }
     }
 }
