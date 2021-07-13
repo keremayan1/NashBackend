@@ -18,7 +18,7 @@ namespace Business.Abstract
         Task<IResult> UpdateAsync(CustomerDetailDto customerDetailDto);
         Task<IResult> DeleteAsync(CustomerDetailDto customerDetailDto);
         Task<IDataResult<List<Customer>>> GetByIdAsync(int id);
-        IDataResult<List<CustomerDetailDto>> GetCustomers(Customer customer);
+        IDataResult<List<CustomerDetailDto>> GetCustomers();
         
     }
 }

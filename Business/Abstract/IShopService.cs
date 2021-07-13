@@ -16,7 +16,7 @@ namespace Business.Abstract
         Task<IResult> AddAsync(ShopDetailDto shopDetailDto);
         Task<IResult> UpdateAsync(ShopDetailDto shopDetailDto);
         Task<IResult> DeleteAsync(ShopDetailDto shopDetailDto);
-        IDataResult<List<ShopDetailDto>> GetShops(Shop shop);
+        IDataResult<List<ShopDetailDto>> GetShops();
 
     }
 }

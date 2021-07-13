@@ -21,9 +21,9 @@ namespace WebAPI.Controllers
             _shopService = shopService;
         }
         [HttpGet("getshop")]
-        public IActionResult GetShop(Shop shop)
+        public IActionResult GetShop()
         {
-            var result =  _shopService.GetShops(shop);
+            var result =  _shopService.GetShops();
             if (result.Success)
             {
                 return Ok(result);
@@ -40,6 +40,15 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-
+        [HttpGet("getall")]
+        public async  Task<IActionResult> GetAll()
+        {
+            var result = await _shopService.GetAllAsync();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

@@ -63,7 +63,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Shop>>(await _shopDal.GetAllAsync(s => s.Id == id));
         }
 
-        public IDataResult<List<ShopDetailDto>> GetShops(Shop shop)
+        public IDataResult<List<ShopDetailDto>> GetShops()
         {
             return new SuccessDataResult<List<ShopDetailDto>>(_shopDal.GetShopDetails().Result);
         }
