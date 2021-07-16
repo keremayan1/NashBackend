@@ -31,7 +31,7 @@ namespace Business.Concrete
 
         public async Task<IResult> AddAsync(List<IFormFile> file, ProductImage productImage)
         {
-            var result = BusinessRules.Run(CheckIfProductImageEnabled(productImage), ProductImageFileCount(file, productImage));
+            var result = BusinessRules.Run(CheckIfProductImageEnabled(productImage), ProductImageUploadCountFile(file, productImage));
             if (result != null)
             {
                 return result;
@@ -76,7 +76,7 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-        public IResult ProductImageFileCount(List<IFormFile>file,ProductImage productImage)
+        public IResult ProductImageUploadCountFile(List<IFormFile>file,ProductImage productImage)
         {
             for (int i = 0; i < file.Count; i++)
             {
