@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -35,15 +36,15 @@ namespace Business.Concrete
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
             if (userToCheck == null)
             {
-                return new ErrorDataResult<User>();
+                return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                return new ErrorDataResult<User>("1234");
+                return new ErrorDataResult<User>(Messages.WrongPassword);
             }
 
-            return new SuccessDataResult<User>(userToCheck);
+            return new SuccessDataResult<User>(userToCheck,Messages.LoginForUser);
         }
 
         public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto)
@@ -61,7 +62,7 @@ namespace Business.Concrete
             };
             await _userService.Add(user);
             await UserOperationClaimsAddAsync(user);
-            return new SuccessDataResult<User>(user, "Kayit Islemi Basarili");
+            return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
         private async Task UserOperationClaimsAddAsync(User user)
@@ -73,7 +74,7 @@ namespace Business.Concrete
         {
             if (_userService.GetByMail(email) != null)
             {
-                return new ErrorResult("Boyle bir kullanici sistemde var");
+                return new ErrorResult(Messages.UserExists);
             }
             return new SuccessResult();
         }

@@ -36,7 +36,7 @@ namespace Core.Extensions
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             string message = "Internal Server Error";
-            FluentValidationValidationExceptionMessage(exception, ref message);
+            FluentValidationExceptionMessage(exception, ref message);
             SystemAuthenticationExceptionMessage(ref message, exception);
             return httpContext.Response.WriteAsync(new ErrorDetail
             {
@@ -44,9 +44,9 @@ namespace Core.Extensions
                 Message = message
             }.ToString());
         }
-        private void FluentValidationValidationExceptionMessage(Exception exception, ref string message)
+        private void FluentValidationExceptionMessage(Exception exception, ref string message)
         {
-            if (exception.GetType() == typeof(FluentValidation.ValidationException))
+            if (exception.GetType() == typeof(ValidationException))
             {
                 message = exception.Message;
             }

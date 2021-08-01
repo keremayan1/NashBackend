@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Adapters.PersonVerificationKps;
+using Business.Constants;
 using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -42,7 +43,7 @@ namespace Business.Concrete
             await _personService.AddAsync(person);
             await _customerDal.AddAsync(customer);
             await _personCustomerService.AddAsync(new PersonCustomer { PersonId = person.Id, CustomerId = customer.CustomerId });
-            return new SuccessResult("ekleme islemi basarili");
+            return new SuccessResult(Messages.CustomerAdded);
         }
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(CustomerDetailDto customerDetailDto)
@@ -52,7 +53,7 @@ namespace Business.Concrete
             await _personService.DeleteAsync(person);
             await  _customerDal.DeleteAsync(customer);
             await _personCustomerService.DeleteAsync(new PersonCustomer { PersonId = person.Id, CustomerId = customer.CustomerId });
-            return new SuccessResult();
+            return new SuccessResult(Messages.CustomerDeleted);
         }
         [CacheAspect]
         public async Task<IDataResult<List<Customer>>> GetAllAsync()
@@ -82,14 +83,14 @@ namespace Business.Concrete
             await _personService.UpdateAsync(person);
             await _customerDal.UpdateAsync(customer);
             await _personCustomerService.UpdateAsync(new PersonCustomer { PersonId = person.Id, CustomerId = customer.CustomerId });
-            return new SuccessResult();
+            return new SuccessResult(Messages.CustomerUpdated);
         }
         private IResult CheckIfRealPerson(Person person)
         {
             var result = _kpsService.Verify(person).Result;
             if (result != true)
             {
-                return new ErrorResult("Hatali TC-No");
+                return new ErrorResult(Messages.RealNationalIdExists);
             }
             return new SuccessResult();
         }
@@ -98,7 +99,7 @@ namespace Business.Concrete
             var result = _customerDal.GetCustomers(p=>p.NationalId==nationalId).Result.Any();
             if (result)
             {
-                return new ErrorResult("Sistemde Bu Kullanıcı Mevcuttur");
+                return new ErrorResult(Messages.NationalIdExists);
             }
             return new SuccessResult();
         }

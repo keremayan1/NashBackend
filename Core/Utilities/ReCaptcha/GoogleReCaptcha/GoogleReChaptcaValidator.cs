@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Security.ReCaptcha.GoogleReCaptcha
+namespace Core.Utilities.ReCaptcha.GoogleReCaptcha
 {
     public class GoogleReChaptcaValidator : IRecaptchaValidator
     {
@@ -21,17 +21,15 @@ namespace Core.Utilities.Security.ReCaptcha.GoogleReCaptcha
 
         public bool IsRecaptchaValid(string token)
         {
-            using (var client = new HttpClient())
-            {
-                var response = client.GetStringAsync($@"{GoogleRecaptchaAddress}?secret={Configuration["Google:RecaptchaV3SecretKey"]}&response={token}").Result;
-                var recaptchaResponse = JsonConvert.DeserializeObject<RecaptchaResponse>(response);
+            var client = new HttpClient();
+            var response = client.GetStringAsync($@"{GoogleRecaptchaAddress}?secret={Configuration["Google:RecaptchaV3SecretKey"]}&response={token}").Result;
+            var recaptchaResponse = JsonConvert.DeserializeObject<RecaptchaResponse>(response);
 
-                if (!recaptchaResponse.Success || recaptchaResponse.Score < Convert.ToDecimal(Configuration["Google:RecaptchaMinScore"]))
-                {
-                    return false;
-                }
-                return true;
+            if (!recaptchaResponse.Success || recaptchaResponse.Score < Convert.ToDecimal(Configuration["Google:RecaptchaMinScore"]))
+            {
+                return false;
             }
+            return true;
 
         }
     }

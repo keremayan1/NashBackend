@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Security.ReCaptcha;
+﻿using Core.Utilities.ReCaptcha;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,7 +13,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CaptchaController : ControllerBase
     {
-        IRecaptchaValidator _recaptchaValidator;
+      public readonly  IRecaptchaValidator _recaptchaValidator;
 
         public CaptchaController(IRecaptchaValidator recaptchaValidator)
         {
@@ -21,7 +22,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult OnPostSubscribeNewsletter( string token)
         {
-            if (!_recaptchaValidator.IsRecaptchaValid(token))
+            if (_recaptchaValidator.IsRecaptchaValid(token))
             {
                 //return error message or something
                 return BadRequest();

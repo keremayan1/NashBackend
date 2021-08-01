@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Security.ReCaptcha
+namespace Core.Utilities.ReCaptcha
 {
     public class RecaptchaResponse
     {
@@ -13,7 +13,7 @@ namespace Core.Utilities.Security.ReCaptcha
         public bool Success { get; set; }
 
         [JsonProperty("error-codes")]
-        public List<string> ErrorCodes { get; set; }
+        public IEnumerable<string> ErrorCodes { get; set; }
 
         [JsonProperty("challenge_ts")]
         public DateTime ChallengeTs { get; set; }

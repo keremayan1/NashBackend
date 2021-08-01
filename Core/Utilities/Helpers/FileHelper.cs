@@ -21,9 +21,9 @@ namespace Core.Utilities.Helpers
             {
                 return new ErrorResult(folderExists.Message);
             }
-            var type = Path.GetExtension(formFile.FileName);
-            var typeValid = CheckTypeValid(type);
-            var randomName = Guid.NewGuid().ToString();
+            string type, randomName;
+            IResult typeValid;
+            NewMethod(formFile, out type, out typeValid, out randomName);
             if (typeValid.Message != null)
             {
                 return new ErrorResult(typeValid.Message);
@@ -33,6 +33,14 @@ namespace Core.Utilities.Helpers
             return new SuccessResult((_folderName + randomName + type).Replace("\\", "/"));
 
         }
+
+        private static void NewMethod(IFormFile formFile, out string type, out IResult typeValid, out string randomName)
+        {
+            type = Path.GetExtension(formFile.FileName);
+            typeValid = CheckTypeValid(type);
+            randomName = Guid.NewGuid().ToString();
+        }
+
         public static IResult Update(IFormFile file, string imagePath)
         {
             var fileExists = CheckFileExists(file);

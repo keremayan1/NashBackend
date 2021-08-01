@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Security.ReCaptcha
+namespace Core.Utilities.Mail
 {
-  public  interface IRecaptchaValidator
+  public  interface IMailService
     {
-        bool IsRecaptchaValid(string token);
+        void Send(EmailMessage emailMessage);
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Caching.Microsoft;
 using Core.Utilities.IoC;
-using Core.Utilities.Security.ReCaptcha;
-using Core.Utilities.Security.ReCaptcha.GoogleReCaptcha;
+using Core.Utilities.Mail;
+using Core.Utilities.ReCaptcha;
+using Core.Utilities.ReCaptcha.GoogleReCaptcha;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -23,6 +24,8 @@ namespace Core.DependencyResolvers
             services.AddSingleton<ICacheManager, MemoryCacheManager>();
             services.AddSingleton<Stopwatch>();
             services.AddSingleton<IRecaptchaValidator, GoogleReChaptcaValidator>();
+            services.AddSingleton<IEmailConfiguration, EmailConfiguration>();
+            services.AddSingleton<IMailService, MailManager>();
         }
     }
 }
