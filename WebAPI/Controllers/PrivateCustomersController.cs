@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public async Task<IActionResult>Add(PrivateCustomerDetailDto privateCustomer)
         {
-            var result = await _privateCustomerService.Add2(privateCustomer);
+            var result = await _privateCustomerService.AddAsync(privateCustomer);
             if (result.Success)
             {
                 return Ok(result);

@@ -1,12 +1,12 @@
 ﻿using Core.Entities;
+using Entities.Abstract;
 using System;
 
 namespace Entities
 {
-    public  class Person:IEntity
+    public  class Person:IPerson
     {
-        
-        public int Id { get; set; }
+       
         public string NationalId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -35,7 +35,6 @@ namespace Business.Concrete
         public async Task<IResult> AddAsync(PrivateCustomerDetailDto privateCustomerDetailDto)
         {
             var customer = Customer(privateCustomerDetailDto);
-
             var privateCustomer = PrivateCustomer(privateCustomerDetailDto);
             var result = BusinessRules.Run(CheckIfPrivateCustomerExists(privateCustomerDetailDto.NationalId));
             if (result != null)
@@ -46,9 +45,6 @@ namespace Business.Concrete
             privateCustomer.Id = customer.CustomerId;
             await _privateCustomerDal.AddAsync(privateCustomer);
             return new SuccessResult("Basarli");
-
-
-
         }
 
         private static PrivateCustomer PrivateCustomer(PrivateCustomerDetailDto privateCustomerDetailDto)

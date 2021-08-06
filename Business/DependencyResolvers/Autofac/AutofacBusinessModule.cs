@@ -41,8 +41,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserOperationClaimManager>().As<IUserOperationClaimService>().SingleInstance();
             builder.RegisterType<EfUserOperationClaimDal>().As<IUserOperationClaimDal>().SingleInstance();
 
-            builder.RegisterType<EfPersonDal>().As<IPersonDal>().SingleInstance();
-            builder.RegisterType<PersonManager>().As<IPersonService>().SingleInstance();
+          
+
 
             builder.RegisterType<CustomerManager>().As<ICustomerService>().SingleInstance();
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>().SingleInstance();

@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-   public interface IPrivateCustomerDal:IEntityRepository<PrivateCustomer>,IAsyncEntityRepository<PrivateCustomer>
+   public interface ICommercialCustomerDal:IEntityRepository<CommercialCustomer>,IAsyncEntityRepository<CommercialCustomer>
     {
-        Task<List<PrivateCustomerDetailDto>> GetPrivateCustomerDetailDto(Expression<Func<PrivateCustomerDetailDto, bool>> filter = null);
+        Task<List<CommercialCustomerDetailDto>> GetCommercialCustomerDetails(Expression<Func<CommercialCustomerDetailDto, bool>> filter = null);
     }
 }

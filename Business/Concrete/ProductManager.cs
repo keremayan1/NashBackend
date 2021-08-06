@@ -68,7 +68,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().Result.OrderByDescending(c => c.ProductName).ToList());
         }
 
-        public IDataResult<List<ProductDetailDto>> GetProductDetailsNameAsc()
+        public  IDataResult<List<ProductDetailDto>> GetProductDetailsNameAsc()
         {
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails().Result.OrderBy(p => p.ProductName).ToList());
         }
