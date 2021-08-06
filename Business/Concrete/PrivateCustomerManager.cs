@@ -40,7 +40,7 @@ namespace Business.Concrete
             return new SuccessResult("Basarili");
         }
 
-        [PerformanceScopeAspect(10)]
+        [PerformanceScopeAspect(5)]
 
         public async Task<IResult> Add2(PrivateCustomerDetailDto privateCustomerDetailDto)
         {
@@ -52,7 +52,7 @@ namespace Business.Concrete
                 NationalId = privateCustomerDetailDto.NationalId,
                 DateOfBirth = privateCustomerDetailDto.DateOfBirth
             };
-            var result = BusinessRules.Run(VerifyId(person));
+            var result = BusinessRules.Run(VerifyId(person),CheckIfPrivateCustomerExists(privateCustomerDetailDto.NationalId));
             if (result != null)
             {
                 return result;
@@ -95,6 +95,15 @@ namespace Business.Concrete
             if (!result)
             {
                 return new ErrorResult("Hatali Tc");
+            }
+            return new SuccessResult();
+        }
+        public IResult CheckIfPrivateCustomerExists(string nationalId)
+        {
+            var result = _privateCustomerDal.GetAll(pc => pc.NationalId == nationalId).Any();
+            if (result)
+            {
+                return new ErrorResult("Kullanici Sistemde Mevcut");
             }
             return new SuccessResult();
         }
