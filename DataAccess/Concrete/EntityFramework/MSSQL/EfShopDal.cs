@@ -26,7 +26,7 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
                          select new ShopDetailDto
                          {
                              NationalId = person.NationalId,
-                             Name = person.Name,
+                             Name = person.FirstName,
                              LastName = person.LastName,
                              DateOfBirth = person.DateOfBirth,
                              TaxNumber = shop.TaxNumber

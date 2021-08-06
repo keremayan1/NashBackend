@@ -68,7 +68,7 @@ namespace Business.Concrete
        
         private IResult PersonInformationToUpper(Person person)
         {
-            person.Name = person.Name.ToUpper();
+            person.FirstName = person.FirstName.ToUpper();
             person.LastName = person.LastName.ToUpper();
             return new SuccessResult();
         }

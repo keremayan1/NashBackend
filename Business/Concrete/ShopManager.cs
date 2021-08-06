@@ -87,7 +87,7 @@ namespace Business.Concrete
             return new Person
             {
                 NationalId = shopDetailDto.NationalId,
-                Name = shopDetailDto.Name,
+                FirstName = shopDetailDto.Name,
                 LastName = shopDetailDto.LastName,
                 DateOfBirth = shopDetailDto.DateOfBirth,
             };

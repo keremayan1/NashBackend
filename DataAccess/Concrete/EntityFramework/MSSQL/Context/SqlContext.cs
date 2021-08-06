@@ -9,8 +9,13 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {//"Server = (localdb)\mssqllocaldb; Database = Deneme; Trusted_Connection = true"
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\ProjectsV13;Initial Catalog=Deneme;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\ProjectsV13;Initial Catalog=Banka;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Ignore<Person>();
+        }
+
         //Data Source=(localdb)\ProjectsV13;Initial Catalog=Deneme;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
         public DbSet<Product> Products { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
@@ -23,6 +28,7 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
         public DbSet<PersonCustomer> PersonCustomers { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<PersonShop> PersonShops { get; set; }
+        public DbSet<PrivateCustomer> PrivateCustomers { get; set; }
 
 
 

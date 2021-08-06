@@ -35,7 +35,7 @@ namespace Business.Concrete
         {
             var person = Person(customerDetailDto);
             var customer = Customer(customerDetailDto);
-            var result = BusinessRules.Run(CheckIfRealPerson(person), CustomerDetailsToUpper(customer),CheckIfNationalIdExists(customerDetailDto.NationalId));
+            var result = BusinessRules.Run(CheckIfRealPerson(person), CustomerDetailsToUpper(customerDetailDto),CheckIfNationalIdExists(customerDetailDto.NationalId));
             if (result != null)
             {
                 return result;
@@ -75,7 +75,7 @@ namespace Business.Concrete
         {
             var person = Person(customerDetailDto);
             var customer = Customer(customerDetailDto);
-            var result = BusinessRules.Run(CheckIfRealPerson(person), CustomerDetailsToUpper(customer),CheckIfNationalIdExists(customerDetailDto.NationalId));
+            var result = BusinessRules.Run(CheckIfRealPerson(person), CustomerDetailsToUpper(customerDetailDto),CheckIfNationalIdExists(customerDetailDto.NationalId));
             if (result != null)
             {
                 return result;
@@ -103,9 +103,10 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-        private IResult CustomerDetailsToUpper(Customer customer)
+        private IResult CustomerDetailsToUpper(CustomerDetailDto customer)
         {
-            customer.Country = customer.Country.ToUpper();
+            
+          
             return new SuccessResult();
         }
         
@@ -113,8 +114,7 @@ namespace Business.Concrete
         {
             return new Customer
             {
-                Country = customerDetailDto.Country,
-                Phone = customerDetailDto.Phone
+              MusteriNo=customerDetailDto.MusteriNo
             };
         }
 
@@ -123,10 +123,28 @@ namespace Business.Concrete
             return new Person
             {
                 NationalId = customerDetailDto.NationalId,
-                Name = customerDetailDto.Name,
+                FirstName = customerDetailDto.Name,
                 LastName = customerDetailDto.LastName,
                 DateOfBirth = customerDetailDto.DateOfBirth,
             };
+        }
+
+        public async Task<IResult> AddAsync2(Customer customer)
+        {
+            await _customerDal.AddAsync(customer);
+            return new SuccessResult();
+        }
+
+        public async Task<IResult> UpdateAsync2(Customer customer)
+        {
+            await _customerDal.UpdateAsync(customer);
+            return new SuccessResult();
+        }
+
+        public async Task<IResult> DeleteAsync2(Customer customer)
+        {
+            await _customerDal.DeleteAsync(customer);
+            return new SuccessResult();
         }
     }
 }

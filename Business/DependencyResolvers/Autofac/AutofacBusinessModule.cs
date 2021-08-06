@@ -56,6 +56,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfPersonShopDal>().As<IPersonShopDal>().SingleInstance();
             builder.RegisterType<PersonShopManager>().As<IPersonShopService>().SingleInstance();
 
+            builder.RegisterType<EfPrivateCustomerDal>().As<IPrivateCustomerDal>().SingleInstance();
+            builder.RegisterType<PrivateCustomerManager>().As<IPrivateCustomerService>().SingleInstance();
+
             builder.RegisterType<KpsServiceManager>().As<IKpsService>().SingleInstance();
 
 

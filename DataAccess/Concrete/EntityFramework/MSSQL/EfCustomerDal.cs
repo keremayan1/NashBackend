@@ -27,11 +27,10 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
                          select new CustomerDetailDto
                          {
                              NationalId = person.NationalId,
-                             Name = person.Name,
+                             Name = person.FirstName,
                              LastName = person.LastName,
                              DateOfBirth = person.DateOfBirth,
-                             Country = customers.Country,
-                             Phone = customers.Phone
+                           MusteriNo=customers.MusteriNo
                          };
             return filter == null ?
                await result.ToListAsync() :

@@ -13,8 +13,9 @@ namespace Entities.Concrete.Dto
         public string Name { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string Country { get; set; }
+      
 
-        public string Phone { get; set; }
+        public string MusteriNo { get; set; }
+
     }
 }

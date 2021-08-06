@@ -47,7 +47,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductUpdated);
         }
         [CacheAspect]
-        [SecuredOperation("user,moderator,admin")]
+       // [SecuredOperation("user,moderator,admin")]
         public async Task<IDataResult<List<Product>>> GetAllAsync()
         {
             return new SuccessDataResult<List<Product>>(await _productDal.GetAllAsync(), Messages.ProductFiltered);

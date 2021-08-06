@@ -19,6 +19,10 @@ namespace Business.Abstract
         Task<IResult> DeleteAsync(CustomerDetailDto customerDetailDto);
         Task<IDataResult<List<Customer>>> GetByIdAsync(int id);
         IDataResult<List<CustomerDetailDto>> GetCustomers();
-        
+        Task<IResult> AddAsync2(Customer customer);
+        Task<IResult> UpdateAsync2(Customer customer);
+        Task<IResult> DeleteAsync2(Customer customer);
+
+
     }
 }

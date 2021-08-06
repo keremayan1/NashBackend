@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Business.Concrete
@@ -34,6 +35,7 @@ namespace Business.Concrete
 
         public async Task<IDataResult<List<Category>>> GetAllAsync()
         {
+            Thread.Sleep(5000);
             return new SuccessDataResult<List<Category>>(await _categoryDal.GetAllAsync());
         } 
 
