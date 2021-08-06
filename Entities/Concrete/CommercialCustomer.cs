@@ -12,6 +12,8 @@ namespace Entities.Concrete
         public int CustomerId { get; set; }
         public string Title { get; set; }
         public string TaxNumber { get; set; }
+        public bool Status { get; set; }
+
 
 
     }
