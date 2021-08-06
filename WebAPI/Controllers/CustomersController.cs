@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
             _customerService = customerService;
         }
         [HttpPost("add")]
-        public async Task<IActionResult> AddAsync(CustomerDetailDto customerDetailDto)
+        public async Task<IActionResult> AddAsync(Customer customerDetailDto)
         {
             var result = await _customerService.AddAsync(customerDetailDto);
             if (result.Success)

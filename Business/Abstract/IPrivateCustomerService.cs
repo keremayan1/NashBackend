@@ -12,7 +12,6 @@ namespace Business.Abstract
    public interface IPrivateCustomerService
     {
         Task<IDataResult<List<PrivateCustomer>>> GetAll();
-        Task<IResult> Add(PrivateCustomer privateCustomer);
-        Task<IResult> Add2(PrivateCustomerDetailDto privateCustomer);
+        Task<IResult> AddAsync(PrivateCustomerDetailDto privateCustomer);
     }
 }

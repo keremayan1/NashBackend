@@ -13,6 +13,6 @@ namespace DataAccess.Abstract
 {
     public interface ICustomerDal : IEntityRepository<Customer>, IAsyncEntityRepository<Customer>
     {
-        Task<List<CustomerDetailDto>> GetCustomers(Expression<Func<CustomerDetailDto, bool>> filter = null);
+       
     }
 }

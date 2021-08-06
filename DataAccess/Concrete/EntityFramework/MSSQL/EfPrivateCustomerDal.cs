@@ -23,7 +23,6 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
                          where customer.CustomerId==privateCustomer.Id
                          select new PrivateCustomerDetailDto
                          {
-                             Id = customer.CustomerId,
                              NationalId = privateCustomer.NationalId,
                              FirstName = privateCustomer.FirstName,
                              LastName = privateCustomer.LastName,

@@ -19,43 +19,14 @@ namespace Business.Concrete
     public class CustomerManager : ICustomerService
     {
         ICustomerDal _customerDal;
-        IPersonService _personService;
-        IPersonCustomerService _personCustomerService;
-        IKpsService _kpsService;
+        
 
-        public CustomerManager(ICustomerDal customerDal, IPersonService personService, IPersonCustomerService personCustomerService, IKpsService kpsService)
+        public CustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
-            _personService = personService;
-            _personCustomerService = personCustomerService;
-            _kpsService = kpsService;
+           
         }
-        [CacheRemoveAspect("Get")]
-        public async Task<IResult> AddAsync(CustomerDetailDto customerDetailDto)
-        {
-            var person = Person(customerDetailDto);
-            var customer = Customer(customerDetailDto);
-            var result = BusinessRules.Run(CheckIfRealPerson(person), CustomerDetailsToUpper(customerDetailDto),CheckIfNationalIdExists(customerDetailDto.NationalId));
-            if (result != null)
-            {
-                return result;
-            }
-            await _personService.AddAsync(person);
-            await _customerDal.AddAsync(customer);
-            await _personCustomerService.AddAsync(new PersonCustomer { PersonId = person.Id, CustomerId = customer.CustomerId });
-            return new SuccessResult(Messages.CustomerAdded);
-        }
-        [CacheRemoveAspect("Get")]
-        public async Task<IResult> DeleteAsync(CustomerDetailDto customerDetailDto)
-        {
-            var person = Person(customerDetailDto);
-            var customer = Customer(customerDetailDto);
-            await _personService.DeleteAsync(person);
-            await  _customerDal.DeleteAsync(customer);
-            await _personCustomerService.DeleteAsync(new PersonCustomer { PersonId = person.Id, CustomerId = customer.CustomerId });
-            return new SuccessResult(Messages.CustomerDeleted);
-        }
-        [CacheAspect]
+       
         public async Task<IDataResult<List<Customer>>> GetAllAsync()
         {
             return new SuccessDataResult<List<Customer>>(await _customerDal.GetAllAsync());
@@ -65,83 +36,20 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Customer>>(await _customerDal.GetAllAsync(p => p.CustomerId == customerId));
         }
-        [CacheAspect]
-        public   IDataResult<List<CustomerDetailDto>> GetCustomers()
-        {
-            return new SuccessDataResult<List<CustomerDetailDto>>( _customerDal.GetCustomers().Result);
-        }
-        [CacheRemoveAspect("Get")]
-        public async Task<IResult> UpdateAsync(CustomerDetailDto customerDetailDto)
-        {
-            var person = Person(customerDetailDto);
-            var customer = Customer(customerDetailDto);
-            var result = BusinessRules.Run(CheckIfRealPerson(person), CustomerDetailsToUpper(customerDetailDto),CheckIfNationalIdExists(customerDetailDto.NationalId));
-            if (result != null)
-            {
-                return result;
-            }
-            await _personService.UpdateAsync(person);
-            await _customerDal.UpdateAsync(customer);
-            await _personCustomerService.UpdateAsync(new PersonCustomer { PersonId = person.Id, CustomerId = customer.CustomerId });
-            return new SuccessResult(Messages.CustomerUpdated);
-        }
-        private IResult CheckIfRealPerson(Person person)
-        {
-            var result = _kpsService.Verify(person).Result;
-            if (result != true)
-            {
-                return new ErrorResult(Messages.RealNationalIdExists);
-            }
-            return new SuccessResult();
-        }
-        private IResult CheckIfNationalIdExists(string nationalId)
-        {
-            var result = _customerDal.GetCustomers(p=>p.NationalId==nationalId).Result.Any();
-            if (result)
-            {
-                return new ErrorResult(Messages.NationalIdExists);
-            }
-            return new SuccessResult();
-        }
-        private IResult CustomerDetailsToUpper(CustomerDetailDto customer)
-        {
-            
-          
-            return new SuccessResult();
-        }
-        
-        private  Customer Customer(CustomerDetailDto customerDetailDto)
-        {
-            return new Customer
-            {
-              MusteriNo=customerDetailDto.MusteriNo
-            };
-        }
-
-        private  Person Person(CustomerDetailDto customerDetailDto)
-        {
-            return new Person
-            {
-                NationalId = customerDetailDto.NationalId,
-                FirstName = customerDetailDto.Name,
-                LastName = customerDetailDto.LastName,
-                DateOfBirth = customerDetailDto.DateOfBirth,
-            };
-        }
-
-        public async Task<IResult> AddAsync2(Customer customer)
+      
+        public async Task<IResult> AddAsync(Customer customer)
         {
             await _customerDal.AddAsync(customer);
             return new SuccessResult();
         }
 
-        public async Task<IResult> UpdateAsync2(Customer customer)
+        public async Task<IResult> UpdateAsync(Customer customer)
         {
             await _customerDal.UpdateAsync(customer);
             return new SuccessResult();
         }
 
-        public async Task<IResult> DeleteAsync2(Customer customer)
+        public async Task<IResult> DeleteAsync(Customer customer)
         {
             await _customerDal.DeleteAsync(customer);
             return new SuccessResult();

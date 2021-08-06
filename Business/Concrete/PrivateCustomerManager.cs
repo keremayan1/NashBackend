@@ -28,61 +28,47 @@ namespace Business.Concrete
             _customerService = customerService;
         }
 
-        public async Task<IResult> Add(PrivateCustomer privateCustomer)
-        {
-            //var result = BusinessRules.Run(VerifyId(privateCustomer));
-            //if (result!=null)
-            //{
-            //    return result;
-            //}
-
-            await _privateCustomerDal.AddAsync(privateCustomer);
-            return new SuccessResult("Basarili");
-        }
+      
 
         [PerformanceScopeAspect(5)]
 
-        public async Task<IResult> Add2(PrivateCustomerDetailDto privateCustomerDetailDto)
+        public async Task<IResult> AddAsync(PrivateCustomerDetailDto privateCustomerDetailDto)
         {
+            var customer = Customer(privateCustomerDetailDto);
 
-            var person = new Person
-            {
-                FirstName = privateCustomerDetailDto.FirstName,
-                LastName = privateCustomerDetailDto.LastName,
-                NationalId = privateCustomerDetailDto.NationalId,
-                DateOfBirth = privateCustomerDetailDto.DateOfBirth
-            };
-            var result = BusinessRules.Run(VerifyId(person),CheckIfPrivateCustomerExists(privateCustomerDetailDto.NationalId));
+            var privateCustomer = PrivateCustomer(privateCustomerDetailDto);
+            var result = BusinessRules.Run(CheckIfPrivateCustomerExists(privateCustomerDetailDto.NationalId));
             if (result != null)
             {
                 return result;
             }
+            await _customerService.AddAsync(customer);
+            privateCustomer.Id = customer.CustomerId;
+            await _privateCustomerDal.AddAsync(privateCustomer);
+            return new SuccessResult("Basarli");
 
 
-            var customer = new Customer
+
+        }
+
+        private static PrivateCustomer PrivateCustomer(PrivateCustomerDetailDto privateCustomerDetailDto)
+        {
+            return new PrivateCustomer
             {
-                MusteriNo = privateCustomerDetailDto.MusteriNo
-            };
-            await _customerService.AddAsync2(customer);
 
-            var privateCustomer = new PrivateCustomer
-            {
-                Id = customer.CustomerId,
                 FirstName = privateCustomerDetailDto.FirstName,
                 LastName = privateCustomerDetailDto.LastName,
                 NationalId = privateCustomerDetailDto.NationalId,
                 DateOfBirth = privateCustomerDetailDto.DateOfBirth
             };
+        }
 
-
-
-            await _privateCustomerDal.AddAsync(privateCustomer);
-
-
-            return new SuccessResult("Basarli");
-
-
-
+        private static Customer Customer(PrivateCustomerDetailDto privateCustomerDetailDto)
+        {
+            return new Customer
+            {
+                MusteriNo = privateCustomerDetailDto.MusteriNo
+            };
         }
 
         public async Task<IDataResult<List<PrivateCustomer>>> GetAll()
