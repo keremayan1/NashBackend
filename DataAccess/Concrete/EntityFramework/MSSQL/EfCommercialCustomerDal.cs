@@ -19,8 +19,8 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
         {
             var result = from customer in context.Customers
                          join commercialCustomer in context.CommercialCustomers
-                         on customer.CustomerId equals commercialCustomer.CustomerId
-                         where customer.CustomerId == commercialCustomer.CustomerId
+                         on customer.CustomerId equals commercialCustomer.Id
+                         where customer.CustomerId == commercialCustomer.Id
                          select new CommercialCustomerDetailDto
                          {
                              MusteriNo = customer.MusteriNo,

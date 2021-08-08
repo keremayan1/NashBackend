@@ -47,7 +47,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CustomerManager>().As<ICustomerService>().SingleInstance();
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>().SingleInstance();
 
-           
+            builder.RegisterType<CommercialCustomerService>().As<ICommercialCustomerService>().SingleInstance();
+            builder.RegisterType<EfCommercialCustomerDal>().As<ICommercialCustomerDal>().SingleInstance();
             
 
         

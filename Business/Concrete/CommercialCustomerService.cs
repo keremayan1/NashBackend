@@ -32,20 +32,14 @@ namespace Business.Concrete
                 return result;
             }
             await _customerDal.AddAsync(customer);
-            commercialCustomer.CustomerId = customer.CustomerId;
+            commercialCustomer.Id = customer.CustomerId;
             await _commercialCustomerDal.AddAsync(commercialCustomer);
             return new SuccessResult();
         }
-
-       
-
         public async Task<IDataResult<List<CommercialCustomer>>> GetAll()
         {
             return new SuccessDataResult<List<CommercialCustomer>>(await _commercialCustomerDal.GetAllAsync());
         }
-        
-
-
         private static CommercialCustomer CommercialCustomer(CommercialCustomerDetailDto commercialCustomerDetailDto)
         {
             return new CommercialCustomer

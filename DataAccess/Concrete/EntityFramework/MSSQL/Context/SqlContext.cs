@@ -23,7 +23,7 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
-        public DbSet<Person> Persons { get; set; }
+        
         public DbSet<Customer> Customers { get; set; }
      
         public DbSet<PrivateCustomer> PrivateCustomers { get; set; }

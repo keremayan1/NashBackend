@@ -4,9 +4,8 @@ using System;
 
 namespace Entities
 {
-    public  class Person:IPerson
+    public   class Person:IPerson
     {
-       
         public string NationalId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

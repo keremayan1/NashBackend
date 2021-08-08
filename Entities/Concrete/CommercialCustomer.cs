@@ -9,12 +9,9 @@ namespace Entities.Concrete
 {
    public class CommercialCustomer:IEntity
     {
-        public int CustomerId { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string TaxNumber { get; set; }
-        public bool Status { get; set; }
-
-
-
+        
     }
 }
