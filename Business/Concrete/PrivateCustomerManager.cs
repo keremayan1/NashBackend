@@ -36,7 +36,7 @@ namespace Business.Concrete
         {
             var customer = Customer(privateCustomerDetailDto);
             var privateCustomer = PrivateCustomer(privateCustomerDetailDto);
-            var result = BusinessRules.Run(VerifyId(privateCustomer),CheckIfPrivateCustomerExists(privateCustomerDetailDto.NationalId));
+            var result = BusinessRules.Run(/*VerifyId(privateCustomer),*/CheckIfPrivateCustomerExists(privateCustomerDetailDto.NationalId));
             if (result != null)
             {
                 return result;

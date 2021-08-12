@@ -9,12 +9,9 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {//"Server = (localdb)\mssqllocaldb; Database = Deneme; Trusted_Connection = true"
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\ProjectsV13;Initial Catalog=Banka;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseSqlServer(@"Server = (localdb)\mssqllocaldb; Database = Banka; Trusted_Connection = true");
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Ignore<Person>();
-        }
+       
 
         //Data Source=(localdb)\ProjectsV13;Initial Catalog=Deneme;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
         public DbSet<Product> Products { get; set; }
@@ -24,6 +21,7 @@ namespace DataAccess.Concrete.EntityFramework.MSSQL
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         
+      
         public DbSet<Customer> Customers { get; set; }
      
         public DbSet<PrivateCustomer> PrivateCustomers { get; set; }
